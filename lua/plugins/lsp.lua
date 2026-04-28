@@ -1,22 +1,73 @@
 return {
   {
     "neovim/nvim-lspconfig",
+
     dependencies = {
       "williamboman/mason.nvim",
       "williamboman/mason-lspconfig.nvim",
+      "stevearc/conform.nvim",
     },
+
     config = function()
-      -- 1. Initialize Mason (The Downloader)
+      ----------------------------------------------------------------------
+      -- Mason
+      ----------------------------------------------------------------------
       require("mason").setup()
 
-      -- 2. Tell Mason which servers to auto-install
       require("mason-lspconfig").setup({
-        ensure_installed = { "gopls", "ts_ls", "pyright" },
+        ensure_installed = {
+          "ts_ls",
+          "eslint",
+          "svelte",
+          "gopls",
+          "pyright",
+        },
       })
 
-      -- 3. The New Native Neovim LSP API
-      
-      -- Go Configuration
+      ----------------------------------------------------------------------
+      -- TypeScript / JavaScript (disable formatting)
+      ----------------------------------------------------------------------
+      vim.lsp.config("ts_ls", {
+        on_attach = function(client)
+          client.server_capabilities.documentFormattingProvider = false
+        end,
+      })
+      vim.lsp.enable("ts_ls")
+
+      ----------------------------------------------------------------------
+      -- ESLint (lint only, no formatting)
+      ----------------------------------------------------------------------
+      vim.lsp.config("eslint", {
+        settings = {
+          workingDirectory = { mode = "auto" },
+        },
+        on_attach = function(client)
+          client.server_capabilities.documentFormattingProvider = false
+        end,
+      })
+      vim.lsp.enable("eslint")
+
+      ----------------------------------------------------------------------
+      -- Svelte (disable formatting → use Prettier)
+      ----------------------------------------------------------------------
+      vim.lsp.config("svelte", {
+        settings = {
+          svelte = {
+            plugin = {
+              html = { completions = { enable = true } },
+              css = { completions = { enable = true } },
+            },
+          },
+        },
+        on_attach = function(client)
+          client.server_capabilities.documentFormattingProvider = false
+        end,
+      })
+      vim.lsp.enable("svelte")
+
+      ----------------------------------------------------------------------
+      -- Go (keep formatter)
+      ----------------------------------------------------------------------
       vim.lsp.config("gopls", {
         settings = {
           gopls = {
@@ -30,44 +81,93 @@ return {
       })
       vim.lsp.enable("gopls")
 
-      -- Connect TypeScript and Python
-      vim.lsp.config("ts_ls", {})
-      vim.lsp.enable("ts_ls")
-      
+      ----------------------------------------------------------------------
+      -- Python (fallback only)
+      ----------------------------------------------------------------------
       vim.lsp.config("pyright", {})
       vim.lsp.enable("pyright")
-      
-      -- 4. Native Neovim Keymaps (Only load when an LSP attaches to a buffer)
+
+      ----------------------------------------------------------------------
+      -- Conform (Prettier + fallback)
+      ----------------------------------------------------------------------
+      require("conform").setup({
+  formatters_by_ft = {
+    javascript = { "prettier" },
+    typescript = { "prettier" },
+    javascriptreact = { "prettier" },
+    typescriptreact = { "prettier" },
+    svelte = { "prettier" },
+    html = { "prettier" },
+    css = { "prettier" },
+    json = { "prettier" },
+  },
+
+  format_on_save = function(bufnr)
+    local ft = vim.bo[bufnr].filetype
+
+    -- ❌ no fallback for frontend (force prettier only)
+    local no_fallback = {
+      javascript = true,
+      typescript = true,
+      javascriptreact = true,
+      typescriptreact = true,
+      svelte = true,
+      html = true,
+      css = true,
+      json = true,
+    }
+
+    return {
+      timeout_ms = 500,
+      lsp_fallback = not no_fallback[ft],
+    }
+  end,
+}) 
+      ----------------------------------------------------------------------
+      -- LSP Attach
+      ----------------------------------------------------------------------
       vim.api.nvim_create_autocmd("LspAttach", {
         group = vim.api.nvim_create_augroup("UserLspConfig", { clear = true }),
+
         callback = function(ev)
           local opts = { buffer = ev.buf }
-
-          -- Enable native completion, but keep the automatic popup OFF
           local client_id = ev.data.client_id
-          vim.lsp.completion.enable(true, client_id, ev.buf, { autotrigger = false })
 
-          -- Map Ctrl+Space to manually open the autocomplete menu in Insert mode ('i')
-          vim.keymap.set("i", "<C-Space>", "<C-x><C-o>", { buffer = ev.buf, desc = "Manual Autocomplete" })
+          ------------------------------------------------------------------
+          -- Completion
+          ------------------------------------------------------------------
+          vim.lsp.completion.enable(true, client_id, ev.buf, {
+            autotrigger = false,
+          })
 
-          -- Format on save
+          vim.keymap.set(
+            "i",
+            "<C-Space>",
+            "<C-x><C-o>",
+            { buffer = ev.buf }
+          )
+
+          ------------------------------------------------------------------
+          -- Keymaps
+          ------------------------------------------------------------------
+          vim.keymap.set("n", "gd", vim.lsp.buf.definition, opts)
+          vim.keymap.set("n", "K", vim.lsp.buf.hover, opts)
+          vim.keymap.set("n", "<leader>rn", vim.lsp.buf.rename, opts)
+          vim.keymap.set("n", "gl", vim.diagnostic.open_float, opts)
+
+          ------------------------------------------------------------------
+          -- Format on save (FIXED)
+          ------------------------------------------------------------------
           vim.api.nvim_create_autocmd("BufWritePre", {
             buffer = ev.buf,
             callback = function()
-              -- We strictly set async = false so the formatting finishes 
-              -- BEFORE the file is actually written to disk.
-              vim.lsp.buf.format({ async = false, id = client_id })
+              require("conform").format({
+                bufnr = ev.buf,
+                timeout_ms = 500,
+                lsp_fallback = true,
+              })
             end,
           })
-
-          -- Press 'gd' to Go to Definition
-          vim.keymap.set("n", "gd", vim.lsp.buf.definition, opts)
-          -- Press 'K' to hover and see documentation for a function
-          vim.keymap.set("n", "K", vim.lsp.buf.hover, opts)
-          -- Press '<space>rn' to rename a variable across the whole project
-          vim.keymap.set("n", "<leader>rn", vim.lsp.buf.rename, opts)
-          -- Press gl to view warnings and errors on line
-          vim.keymap.set("n", "gl", vim.diagnostic.open_float, opts)
         end,
       })
     end,
