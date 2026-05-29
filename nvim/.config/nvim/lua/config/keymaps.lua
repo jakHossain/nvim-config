@@ -14,3 +14,7 @@ vim.keymap.set('n', '<leader>/', builtin.current_buffer_fuzzy_find, { desc = 'Se
 -- nvim-tree
 vim.keymap.set("n", "<leader>e", ":NvimTreeToggle<CR>", { desc = "Toggle File Explorer" })
 vim.keymap.set("n", "<leader>nf", ":NvimTreeFindFile<CR>", { desc = "Find current file in Tree" })
+
+-- svelte-lsp
+-- force lsp restart to recognize new imports from js/ts files
+vim.keymap.set("n", "<leader>rr", ":lsp restart svelte<CR>")
