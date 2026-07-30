@@ -1,55 +1,142 @@
-return {
-  {
-    "neovim/nvim-lspconfig",
-    lazy = false,
-    dependencies = {
-      "williamboman/mason.nvim",
-      "williamboman/mason-lspconfig.nvim",
-    },
+-- lua/config/lsp.lua
+local M = {}
 
-    config = function()
-      ------------------------------------------------------------------
-      -- Mason setup
-      ------------------------------------------------------------------
-      require("mason").setup()
+----------------------------------------------------------------------
+-- Typescript Tools Configuration
+----------------------------------------------------------------------
+function M.setup_typescript()
+	require("typescript-tools").setup({
+		on_attach = function(client)
+			-- Delegate formatting to conform/prettier
+			client.server_capabilities.documentFormattingProvider = false
+			client.server_capabilities.documentRangeFormattingProvider = false
+		end,
+		settings = {
+			tsserver_file_preferences = {
+				includeInlayParameterNameHints = "all",
+				includeCompletionsForModuleExports = true,
+				quotePreference = "auto",
+			},
+			tsserver_format_options = {
+				indentSize = 2,
+				tabSize = 2,
+			},
+			separate_diagnostic_server = true,
+			publish_diagnostic_on = "insert_leave",
+		},
+	})
+end
 
-      require("mason-lspconfig").setup({
-        ensure_installed = {
-          "gopls",
-        },
-      })
+----------------------------------------------------------------------
+-- Core LSP, Mason, and Conform Configuration
+----------------------------------------------------------------------
+function M.setup_servers()
+	-- 1. Mason Setup
+	require("mason").setup()
 
-      ------------------------------------------------------------------
-      -- gopls setup
-      ------------------------------------------------------------------
-      local lspconfig = require("lspconfig")
+	require("mason-lspconfig").setup({
+		ensure_installed = {
+			"ts_ls",
+			"eslint",
+			"svelte",
+			"gopls",
+			"pyright",
+			"lua_ls",
+			"jsonls",
+		},
+	})
 
-      lspconfig.gopls.setup({
-        settings = {
-          gopls = {
-            analyses = {
-              unusedparams = true,
-              shadow = true,
-            },
-            staticcheck = true,
-          },
-        },
-      })
+	require("mason-tool-installer").setup({
+		ensure_installed = { "prettier", "stylua" },
+		auto_update = true,
+		run_on_start = true,
+	})
 
-      ------------------------------------------------------------------
-      -- LSP attach keymaps
-      ------------------------------------------------------------------
-      vim.api.nvim_create_autocmd("LspAttach", {
-        callback = function(ev)
-          local opts = { buffer = ev.buf }
+	-- 2. LSP Server Configurations (Native API)
 
-          vim.keymap.set("n", "gd", vim.lsp.buf.definition, opts)
-          vim.keymap.set("n", "K", vim.lsp.buf.hover, opts)
-          vim.keymap.set("n", "gr", vim.lsp.buf.references, opts)
-          vim.keymap.set("n", "<leader>rn", vim.lsp.buf.rename, opts)
-          vim.keymap.set("n", "gl", vim.diagnostic.open_float, opts)
-        end,
-      })
-    end,
-  },
-}
+	-- ESLint
+	vim.lsp.config("eslint", {
+		settings = { workingDirectory = { mode = "auto" } },
+		on_attach = function(client)
+			client.server_capabilities.documentFormattingProvider = false
+		end,
+	})
+	vim.lsp.enable("eslint")
+
+	-- Svelte
+	vim.lsp.config("svelte", {
+		settings = {
+			svelte = {
+				plugin = { html = { completions = { enable = true } }, css = { completions = { enable = true } } },
+			},
+		},
+		on_attach = function(client)
+			client.server_capabilities.documentFormattingProvider = false
+		end,
+	})
+	vim.lsp.enable("svelte")
+
+	-- Go
+	vim.lsp.config("gopls", {
+		settings = {
+			gopls = { analyses = { unusedparams = true, shadow = true }, staticcheck = true },
+		},
+	})
+	vim.lsp.enable("gopls")
+
+	-- Python
+	vim.lsp.config("pyright", {})
+	vim.lsp.enable("pyright")
+
+	-- Lua
+	vim.lsp.config("lua_ls", {
+		settings = { Lua = { telemetry = { enable = false } } },
+	})
+	vim.lsp.enable("lua_ls")
+
+	-- JSON
+	vim.lsp.config("jsonls", {
+		settings = {
+			json = {
+				schemas = require("schemastore").json.schemas(),
+				validate = { enable = true },
+			},
+		},
+	})
+	vim.lsp.enable("jsonls")
+
+	-- 3. Conform Setup (Format on Save)
+	require("conform").setup({
+		formatters_by_ft = {
+			javascript = { "prettier" },
+			typescript = { "prettier" },
+			javascriptreact = { "prettier" },
+			typescriptreact = { "prettier" },
+			svelte = { "prettier" },
+			html = { "prettier" },
+			css = { "prettier" },
+			json = { "prettier" },
+			lua = { "stylua" },
+		},
+		format_on_save = function(bufnr)
+			local ft = vim.bo[bufnr].filetype
+			local no_fallback = {
+				javascript = true,
+				typescript = true,
+				javascriptreact = true,
+				typescriptreact = true,
+				svelte = true,
+				html = true,
+				css = true,
+				json = true,
+				lua = true,
+			}
+			return {
+				timeout_ms = 500,
+				lsp_format = no_fallback[ft] and "never" or "fallback",
+			}
+		end,
+	})
+end
+
+return M

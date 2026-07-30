@@ -1,20 +1,60 @@
-vim.keymap.set("n", "<leader>q", ":q<CR>")
-vim.keymap.set("i", "jk", "<Esc>")
-vim.keymap.set("n", "<leader>w", ":w<CR>")
-vim.keymap.set("n", "<leader>wq", ":wq<CR>")
+local keymap = vim.keymap.set
 
--- Telescope keymaps
-local builtin = require('telescope.builtin')
-vim.keymap.set('n', '<leader>ff', builtin.find_files, { desc = 'Telescope find files' })
-vim.keymap.set('n', '<leader>fg', builtin.live_grep, { desc = 'Telescope live grep' })
-vim.keymap.set('n', '<leader>fb', builtin.buffers, { desc = 'Telescope buffers' })
-vim.keymap.set('n', '<leader>fh', builtin.help_tags, { desc = 'Telescope help tags' })
-vim.keymap.set('n', '<leader>/', builtin.current_buffer_fuzzy_find, { desc = 'Search current file' })
+------------------------------------------------------------------
+-- General
+------------------------------------------------------------------
+keymap("n", "<leader>q", ":q<CR>")
+keymap("i", "jk", "<Esc>")
+keymap("n", "<leader>w", ":w<CR>")
+keymap("n", "<leader>wq", ":wq<CR>")
 
--- nvim-tree
-vim.keymap.set("n", "<leader>e", ":NvimTreeToggle<CR>", { desc = "Toggle File Explorer" })
-vim.keymap.set("n", "<leader>nf", ":NvimTreeFindFile<CR>", { desc = "Find current file in Tree" })
+------------------------------------------------------------------
+-- Telescope
+------------------------------------------------------------------
+keymap("n", "<leader>ff", function()
+	require("telescope.builtin").find_files()
+end, { desc = "Telescope find files" })
+keymap("n", "<leader>fg", function()
+	require("telescope.builtin").live_grep()
+end, { desc = "Telescope live grep" })
+keymap("n", "<leader>fb", function()
+	require("telescope.builtin").buffers()
+end, { desc = "Telescope buffers" })
+keymap("n", "<leader>fh", function()
+	require("telescope.builtin").help_tags()
+end, { desc = "Telescope help tags" })
+keymap("n", "<leader>/", function()
+	require("telescope.builtin").current_buffer_fuzzy_find()
+end, { desc = "Search current file" })
 
--- svelte-lsp
--- force lsp restart to recognize new imports from js/ts files
-vim.keymap.set("n", "<leader>rr", ":lsp restart svelte<CR>")
+------------------------------------------------------------------
+-- Nvim-tree
+------------------------------------------------------------------
+keymap("n", "<leader>e", ":NvimTreeToggle<CR>", { desc = "Toggle File Explorer" })
+keymap("n", "<leader>nf", ":NvimTreeFindFile<CR>", { desc = "Find current file in Tree" })
+
+------------------------------------------------------------------
+-- Svelte LSP
+------------------------------------------------------------------
+
+------------------------------------------------------------------
+-- LSP Buffer Keymaps & Completion
+------------------------------------------------------------------
+vim.api.nvim_create_autocmd("LspAttach", {
+	group = vim.api.nvim_create_augroup("UserLspKeymaps", { clear = true }),
+	callback = function(ev)
+		local opts = { buffer = ev.buf }
+		local client_id = ev.data.client_id
+
+		-- Navigation & Diagnostics
+		keymap("n", "gd", vim.lsp.buf.definition, opts)
+		keymap("n", "K", vim.lsp.buf.hover, opts)
+		keymap("n", "gr", vim.lsp.buf.references, opts)
+		keymap("n", "<leader>rn", vim.lsp.buf.rename, opts)
+		keymap("n", "gl", vim.diagnostic.open_float, opts)
+
+		-- Native Completion Enablement
+		vim.lsp.completion.enable(true, client_id, ev.buf, { autotrigger = false })
+		keymap("i", "<C-Space>", "<C-x><C-o>", opts)
+	end,
+})
