@@ -33,8 +33,8 @@ return {
 		event = "BufReadPost",
 		config = function()
 			local textobjects = {
-				["at"] = "@element.outer",
-				["it"] = "@element.inner",
+				["ae"] = "@element.outer",
+				["ie"] = "@element.inner",
 			}
 
 			for key, capture in pairs(textobjects) do

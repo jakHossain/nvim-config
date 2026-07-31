@@ -1,11 +1,21 @@
 -- lua/config/lsp.lua
 local M = {}
 
+-- Broadcast nvim-cmp completion capabilities to every LSP client.
+local function make_capabilities()
+	local ok, cmp_lsp = pcall(require, "cmp_nvim_lsp")
+	if ok then
+		return cmp_lsp.default_capabilities()
+	end
+	return vim.lsp.protocol.make_client_capabilities()
+end
+
 ----------------------------------------------------------------------
 -- Typescript Tools Configuration
 ----------------------------------------------------------------------
 function M.setup_typescript()
 	require("typescript-tools").setup({
+		capabilities = make_capabilities(),
 		on_attach = function(client)
 			-- Delegate formatting to conform/prettier
 			client.server_capabilities.documentFormattingProvider = false
@@ -39,6 +49,8 @@ function M.setup_servers()
 			"ts_ls",
 			"eslint",
 			"svelte",
+			"html",
+			"lemminx",
 			"gopls",
 			"pyright",
 			"lua_ls",
@@ -53,9 +65,12 @@ function M.setup_servers()
 	})
 
 	-- 2. LSP Server Configurations (Native API)
+	local capabilities = make_capabilities()
+	local svg_custom_data = vim.fn.stdpath("config") .. "/lua/config/html-custom-data/svg.json"
 
 	-- ESLint
 	vim.lsp.config("eslint", {
+		capabilities = capabilities,
 		settings = { workingDirectory = { mode = "auto" } },
 		on_attach = function(client)
 			client.server_capabilities.documentFormattingProvider = false
@@ -65,10 +80,12 @@ function M.setup_servers()
 
 	-- Svelte
 	vim.lsp.config("svelte", {
+		capabilities = capabilities,
 		settings = {
 			svelte = {
 				plugin = { html = { completions = { enable = true } }, css = { completions = { enable = true } } },
 			},
+			html = { customData = { svg_custom_data } },
 		},
 		on_attach = function(client)
 			client.server_capabilities.documentFormattingProvider = false
@@ -76,8 +93,33 @@ function M.setup_servers()
 	})
 	vim.lsp.enable("svelte")
 
+	-- HTML
+	vim.lsp.config("html", {
+		capabilities = capabilities,
+		init_options = {
+			provideFormatter = false,
+			embeddedLanguages = { css = true, javascript = true },
+			configurationSection = { "html", "css", "javascript" },
+		},
+		settings = {
+			html = { customData = { svg_custom_data } },
+		},
+		on_attach = function(client)
+			client.server_capabilities.documentFormattingProvider = false
+			client.server_capabilities.documentRangeFormattingProvider = false
+		end,
+	})
+	vim.lsp.enable("html")
+
+	-- Lemminx (XML) — attaches to .svg via the xml filetype mapping in treesitter.lua
+	vim.lsp.config("lemminx", {
+		capabilities = capabilities,
+	})
+	vim.lsp.enable("lemminx")
+
 	-- Go
 	vim.lsp.config("gopls", {
+		capabilities = capabilities,
 		settings = {
 			gopls = { analyses = { unusedparams = true, shadow = true }, staticcheck = true },
 		},
@@ -85,17 +127,19 @@ function M.setup_servers()
 	vim.lsp.enable("gopls")
 
 	-- Python
-	vim.lsp.config("pyright", {})
+	vim.lsp.config("pyright", { capabilities = capabilities })
 	vim.lsp.enable("pyright")
 
 	-- Lua
 	vim.lsp.config("lua_ls", {
+		capabilities = capabilities,
 		settings = { Lua = { telemetry = { enable = false } } },
 	})
 	vim.lsp.enable("lua_ls")
 
 	-- JSON
 	vim.lsp.config("jsonls", {
+		capabilities = capabilities,
 		settings = {
 			json = {
 				schemas = require("schemastore").json.schemas(),

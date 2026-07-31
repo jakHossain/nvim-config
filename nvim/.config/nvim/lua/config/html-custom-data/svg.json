@@ -1,0 +1,868 @@
+{
+  "version": 1.1,
+  "tags": [
+    {
+      "name": "svg",
+      "description": "Root SVG element.",
+      "attributes": [
+        { "name": "xmlns" },
+        { "name": "xmlns:xlink" },
+        { "name": "version" },
+        { "name": "baseProfile" },
+        { "name": "viewBox" },
+        { "name": "width" },
+        { "name": "height" },
+        { "name": "x" },
+        { "name": "y" },
+        { "name": "preserveAspectRatio" },
+        { "name": "zoomAndPan" }
+      ]
+    },
+    { "name": "g", "description": "Group of SVG elements.", "attributes": [] },
+    {
+      "name": "defs",
+      "description": "Container for reusable elements.",
+      "attributes": []
+    },
+    {
+      "name": "symbol",
+      "description": "Reusable graphical template.",
+      "attributes": [
+        { "name": "viewBox" },
+        { "name": "preserveAspectRatio" },
+        { "name": "refX" },
+        { "name": "refY" },
+        { "name": "x" },
+        { "name": "y" },
+        { "name": "width" },
+        { "name": "height" }
+      ]
+    },
+    {
+      "name": "use",
+      "description": "Reference to another element.",
+      "attributes": [
+        { "name": "href" },
+        { "name": "xlink:href" },
+        { "name": "x" },
+        { "name": "y" },
+        { "name": "width" },
+        { "name": "height" }
+      ]
+    },
+    {
+      "name": "switch",
+      "description": "Conditional rendering container.",
+      "attributes": []
+    },
+    {
+      "name": "foreignObject",
+      "description": "Embed non-SVG XML content.",
+      "attributes": [
+        { "name": "x" },
+        { "name": "y" },
+        { "name": "width" },
+        { "name": "height" }
+      ]
+    },
+    {
+      "name": "desc",
+      "description": "Description of an SVG element.",
+      "attributes": []
+    },
+    {
+      "name": "title",
+      "description": "Tooltip / accessible title.",
+      "attributes": []
+    },
+    {
+      "name": "metadata",
+      "description": "Metadata container.",
+      "attributes": []
+    },
+    {
+      "name": "view",
+      "description": "Predefined view of the SVG.",
+      "attributes": [
+        { "name": "viewBox" },
+        { "name": "preserveAspectRatio" },
+        { "name": "zoomAndPan" },
+        { "name": "viewTarget" }
+      ]
+    },
+
+    {
+      "name": "rect",
+      "description": "Rectangle shape.",
+      "attributes": [
+        { "name": "x" },
+        { "name": "y" },
+        { "name": "width" },
+        { "name": "height" },
+        { "name": "rx" },
+        { "name": "ry" },
+        { "name": "pathLength" }
+      ]
+    },
+    {
+      "name": "circle",
+      "description": "Circle shape.",
+      "attributes": [
+        { "name": "cx" },
+        { "name": "cy" },
+        { "name": "r" },
+        { "name": "pathLength" }
+      ]
+    },
+    {
+      "name": "ellipse",
+      "description": "Ellipse shape.",
+      "attributes": [
+        { "name": "cx" },
+        { "name": "cy" },
+        { "name": "rx" },
+        { "name": "ry" },
+        { "name": "pathLength" }
+      ]
+    },
+    {
+      "name": "line",
+      "description": "Line segment.",
+      "attributes": [
+        { "name": "x1" },
+        { "name": "y1" },
+        { "name": "x2" },
+        { "name": "y2" },
+        { "name": "pathLength" }
+      ]
+    },
+    {
+      "name": "polyline",
+      "description": "Connected straight-line segments.",
+      "attributes": [{ "name": "points" }, { "name": "pathLength" }]
+    },
+    {
+      "name": "polygon",
+      "description": "Closed polygon.",
+      "attributes": [{ "name": "points" }, { "name": "pathLength" }]
+    },
+    {
+      "name": "path",
+      "description": "Path shape.",
+      "attributes": [{ "name": "d" }, { "name": "pathLength" }]
+    },
+
+    {
+      "name": "text",
+      "description": "Text element.",
+      "attributes": [
+        { "name": "x" },
+        { "name": "y" },
+        { "name": "dx" },
+        { "name": "dy" },
+        { "name": "rotate" },
+        { "name": "textLength" },
+        { "name": "lengthAdjust" }
+      ]
+    },
+    {
+      "name": "tspan",
+      "description": "Text span.",
+      "attributes": [
+        { "name": "x" },
+        { "name": "y" },
+        { "name": "dx" },
+        { "name": "dy" },
+        { "name": "rotate" },
+        { "name": "textLength" },
+        { "name": "lengthAdjust" }
+      ]
+    },
+    {
+      "name": "textPath",
+      "description": "Text along a path.",
+      "attributes": [
+        { "name": "href" },
+        { "name": "xlink:href" },
+        { "name": "startOffset" },
+        { "name": "method" },
+        { "name": "spacing" },
+        { "name": "side" },
+        { "name": "textLength" },
+        { "name": "lengthAdjust" }
+      ]
+    },
+
+    {
+      "name": "image",
+      "description": "Embed raster/vector image.",
+      "attributes": [
+        { "name": "href" },
+        { "name": "xlink:href" },
+        { "name": "x" },
+        { "name": "y" },
+        { "name": "width" },
+        { "name": "height" },
+        { "name": "preserveAspectRatio" },
+        { "name": "crossorigin" }
+      ]
+    },
+
+    {
+      "name": "marker",
+      "description": "Arrowhead / marker symbol.",
+      "attributes": [
+        { "name": "markerUnits" },
+        { "name": "refX" },
+        { "name": "refY" },
+        { "name": "markerWidth" },
+        { "name": "markerHeight" },
+        { "name": "orient" },
+        { "name": "viewBox" },
+        { "name": "preserveAspectRatio" }
+      ]
+    },
+
+    {
+      "name": "linearGradient",
+      "description": "Linear gradient.",
+      "attributes": [
+        { "name": "x1" },
+        { "name": "y1" },
+        { "name": "x2" },
+        { "name": "y2" },
+        { "name": "gradientUnits" },
+        { "name": "gradientTransform" },
+        { "name": "spreadMethod" },
+        { "name": "href" },
+        { "name": "xlink:href" }
+      ]
+    },
+    {
+      "name": "radialGradient",
+      "description": "Radial gradient.",
+      "attributes": [
+        { "name": "cx" },
+        { "name": "cy" },
+        { "name": "r" },
+        { "name": "fx" },
+        { "name": "fy" },
+        { "name": "fr" },
+        { "name": "gradientUnits" },
+        { "name": "gradientTransform" },
+        { "name": "spreadMethod" },
+        { "name": "href" },
+        { "name": "xlink:href" }
+      ]
+    },
+    {
+      "name": "stop",
+      "description": "Gradient stop.",
+      "attributes": [
+        { "name": "offset" },
+        { "name": "stop-color" },
+        { "name": "stop-opacity" }
+      ]
+    },
+    {
+      "name": "pattern",
+      "description": "Repeating pattern fill.",
+      "attributes": [
+        { "name": "x" },
+        { "name": "y" },
+        { "name": "width" },
+        { "name": "height" },
+        { "name": "patternUnits" },
+        { "name": "patternContentUnits" },
+        { "name": "patternTransform" },
+        { "name": "viewBox" },
+        { "name": "preserveAspectRatio" },
+        { "name": "href" },
+        { "name": "xlink:href" }
+      ]
+    },
+    {
+      "name": "hatch",
+      "description": "Hatch fill (SVG 2).",
+      "attributes": [
+        { "name": "x" },
+        { "name": "y" },
+        { "name": "pitch" },
+        { "name": "rotate" },
+        { "name": "hatchUnits" },
+        { "name": "hatchContentUnits" },
+        { "name": "transform" },
+        { "name": "href" },
+        { "name": "xlink:href" }
+      ]
+    },
+    {
+      "name": "hatchpath",
+      "description": "Hatch path.",
+      "attributes": [{ "name": "d" }, { "name": "offset" }]
+    },
+
+    {
+      "name": "clipPath",
+      "description": "Clipping path.",
+      "attributes": [{ "name": "clipPathUnits" }]
+    },
+    {
+      "name": "mask",
+      "description": "Alpha mask.",
+      "attributes": [
+        { "name": "maskUnits" },
+        { "name": "maskContentUnits" },
+        { "name": "x" },
+        { "name": "y" },
+        { "name": "width" },
+        { "name": "height" }
+      ]
+    },
+
+    {
+      "name": "filter",
+      "description": "Filter effect container.",
+      "attributes": [
+        { "name": "x" },
+        { "name": "y" },
+        { "name": "width" },
+        { "name": "height" },
+        { "name": "filterUnits" },
+        { "name": "primitiveUnits" },
+        { "name": "href" },
+        { "name": "xlink:href" }
+      ]
+    },
+    {
+      "name": "feBlend",
+      "description": "Blend filter primitive.",
+      "attributes": [
+        { "name": "in" },
+        { "name": "in2" },
+        { "name": "mode" },
+        { "name": "result" },
+        { "name": "x" },
+        { "name": "y" },
+        { "name": "width" },
+        { "name": "height" }
+      ]
+    },
+    {
+      "name": "feColorMatrix",
+      "description": "Color matrix filter primitive.",
+      "attributes": [
+        { "name": "in" },
+        { "name": "type" },
+        { "name": "values" },
+        { "name": "result" },
+        { "name": "x" },
+        { "name": "y" },
+        { "name": "width" },
+        { "name": "height" }
+      ]
+    },
+    {
+      "name": "feComponentTransfer",
+      "description": "Component transfer filter primitive.",
+      "attributes": [
+        { "name": "in" },
+        { "name": "result" },
+        { "name": "x" },
+        { "name": "y" },
+        { "name": "width" },
+        { "name": "height" }
+      ]
+    },
+    {
+      "name": "feFuncR",
+      "description": "Red transfer function.",
+      "attributes": [
+        { "name": "type" },
+        { "name": "tableValues" },
+        { "name": "slope" },
+        { "name": "intercept" },
+        { "name": "amplitude" },
+        { "name": "exponent" },
+        { "name": "offset" }
+      ]
+    },
+    {
+      "name": "feFuncG",
+      "description": "Green transfer function.",
+      "attributes": [
+        { "name": "type" },
+        { "name": "tableValues" },
+        { "name": "slope" },
+        { "name": "intercept" },
+        { "name": "amplitude" },
+        { "name": "exponent" },
+        { "name": "offset" }
+      ]
+    },
+    {
+      "name": "feFuncB",
+      "description": "Blue transfer function.",
+      "attributes": [
+        { "name": "type" },
+        { "name": "tableValues" },
+        { "name": "slope" },
+        { "name": "intercept" },
+        { "name": "amplitude" },
+        { "name": "exponent" },
+        { "name": "offset" }
+      ]
+    },
+    {
+      "name": "feFuncA",
+      "description": "Alpha transfer function.",
+      "attributes": [
+        { "name": "type" },
+        { "name": "tableValues" },
+        { "name": "slope" },
+        { "name": "intercept" },
+        { "name": "amplitude" },
+        { "name": "exponent" },
+        { "name": "offset" }
+      ]
+    },
+    {
+      "name": "feComposite",
+      "description": "Composite filter primitive.",
+      "attributes": [
+        { "name": "in" },
+        { "name": "in2" },
+        { "name": "operator" },
+        { "name": "k1" },
+        { "name": "k2" },
+        { "name": "k3" },
+        { "name": "k4" },
+        { "name": "result" },
+        { "name": "x" },
+        { "name": "y" },
+        { "name": "width" },
+        { "name": "height" }
+      ]
+    },
+    {
+      "name": "feConvolveMatrix",
+      "description": "Convolution matrix filter primitive.",
+      "attributes": [
+        { "name": "in" },
+        { "name": "order" },
+        { "name": "kernelMatrix" },
+        { "name": "divisor" },
+        { "name": "bias" },
+        { "name": "targetX" },
+        { "name": "targetY" },
+        { "name": "edgeMode" },
+        { "name": "kernelUnitLength" },
+        { "name": "preserveAlpha" },
+        { "name": "result" },
+        { "name": "x" },
+        { "name": "y" },
+        { "name": "width" },
+        { "name": "height" }
+      ]
+    },
+    {
+      "name": "feDiffuseLighting",
+      "description": "Diffuse lighting filter primitive.",
+      "attributes": [
+        { "name": "in" },
+        { "name": "surfaceScale" },
+        { "name": "diffuseConstant" },
+        { "name": "kernelUnitLength" },
+        { "name": "lighting-color" },
+        { "name": "result" },
+        { "name": "x" },
+        { "name": "y" },
+        { "name": "width" },
+        { "name": "height" }
+      ]
+    },
+    {
+      "name": "feSpecularLighting",
+      "description": "Specular lighting filter primitive.",
+      "attributes": [
+        { "name": "in" },
+        { "name": "surfaceScale" },
+        { "name": "specularConstant" },
+        { "name": "specularExponent" },
+        { "name": "kernelUnitLength" },
+        { "name": "lighting-color" },
+        { "name": "result" },
+        { "name": "x" },
+        { "name": "y" },
+        { "name": "width" },
+        { "name": "height" }
+      ]
+    },
+    {
+      "name": "feDistantLight",
+      "description": "Distant light source.",
+      "attributes": [{ "name": "azimuth" }, { "name": "elevation" }]
+    },
+    {
+      "name": "fePointLight",
+      "description": "Point light source.",
+      "attributes": [{ "name": "x" }, { "name": "y" }, { "name": "z" }]
+    },
+    {
+      "name": "feSpotLight",
+      "description": "Spot light source.",
+      "attributes": [
+        { "name": "x" },
+        { "name": "y" },
+        { "name": "z" },
+        { "name": "pointsAtX" },
+        { "name": "pointsAtY" },
+        { "name": "pointsAtZ" },
+        { "name": "specularExponent" },
+        { "name": "limitingConeAngle" }
+      ]
+    },
+    {
+      "name": "feDisplacementMap",
+      "description": "Displacement map filter primitive.",
+      "attributes": [
+        { "name": "in" },
+        { "name": "in2" },
+        { "name": "scale" },
+        { "name": "xChannelSelector" },
+        { "name": "yChannelSelector" },
+        { "name": "result" },
+        { "name": "x" },
+        { "name": "y" },
+        { "name": "width" },
+        { "name": "height" }
+      ]
+    },
+    {
+      "name": "feDropShadow",
+      "description": "Drop shadow filter primitive.",
+      "attributes": [
+        { "name": "in" },
+        { "name": "stdDeviation" },
+        { "name": "dx" },
+        { "name": "dy" },
+        { "name": "flood-color" },
+        { "name": "flood-opacity" },
+        { "name": "result" },
+        { "name": "x" },
+        { "name": "y" },
+        { "name": "width" },
+        { "name": "height" }
+      ]
+    },
+    {
+      "name": "feFlood",
+      "description": "Flood filter primitive.",
+      "attributes": [
+        { "name": "flood-color" },
+        { "name": "flood-opacity" },
+        { "name": "result" },
+        { "name": "x" },
+        { "name": "y" },
+        { "name": "width" },
+        { "name": "height" }
+      ]
+    },
+    {
+      "name": "feGaussianBlur",
+      "description": "Gaussian blur filter primitive.",
+      "attributes": [
+        { "name": "in" },
+        { "name": "stdDeviation" },
+        { "name": "edgeMode" },
+        { "name": "result" },
+        { "name": "x" },
+        { "name": "y" },
+        { "name": "width" },
+        { "name": "height" }
+      ]
+    },
+    {
+      "name": "feImage",
+      "description": "External image filter primitive.",
+      "attributes": [
+        { "name": "href" },
+        { "name": "xlink:href" },
+        { "name": "preserveAspectRatio" },
+        { "name": "crossorigin" },
+        { "name": "result" },
+        { "name": "x" },
+        { "name": "y" },
+        { "name": "width" },
+        { "name": "height" }
+      ]
+    },
+    {
+      "name": "feMerge",
+      "description": "Merge filter primitive.",
+      "attributes": [
+        { "name": "result" },
+        { "name": "x" },
+        { "name": "y" },
+        { "name": "width" },
+        { "name": "height" }
+      ]
+    },
+    {
+      "name": "feMergeNode",
+      "description": "Merge input node.",
+      "attributes": [{ "name": "in" }]
+    },
+    {
+      "name": "feMorphology",
+      "description": "Morphology filter primitive.",
+      "attributes": [
+        { "name": "in" },
+        { "name": "operator" },
+        { "name": "radius" },
+        { "name": "result" },
+        { "name": "x" },
+        { "name": "y" },
+        { "name": "width" },
+        { "name": "height" }
+      ]
+    },
+    {
+      "name": "feOffset",
+      "description": "Offset filter primitive.",
+      "attributes": [
+        { "name": "in" },
+        { "name": "dx" },
+        { "name": "dy" },
+        { "name": "result" },
+        { "name": "x" },
+        { "name": "y" },
+        { "name": "width" },
+        { "name": "height" }
+      ]
+    },
+    {
+      "name": "feTile",
+      "description": "Tile filter primitive.",
+      "attributes": [
+        { "name": "in" },
+        { "name": "result" },
+        { "name": "x" },
+        { "name": "y" },
+        { "name": "width" },
+        { "name": "height" }
+      ]
+    },
+    {
+      "name": "feTurbulence",
+      "description": "Turbulence filter primitive.",
+      "attributes": [
+        { "name": "baseFrequency" },
+        { "name": "numOctaves" },
+        { "name": "seed" },
+        { "name": "stitchTiles" },
+        { "name": "type" },
+        { "name": "result" },
+        { "name": "x" },
+        { "name": "y" },
+        { "name": "width" },
+        { "name": "height" }
+      ]
+    },
+
+    {
+      "name": "animate",
+      "description": "Animate an attribute.",
+      "attributes": [
+        { "name": "attributeName" },
+        { "name": "attributeType" },
+        { "name": "from" },
+        { "name": "to" },
+        { "name": "by" },
+        { "name": "values" },
+        { "name": "dur" },
+        { "name": "begin" },
+        { "name": "end" },
+        { "name": "min" },
+        { "name": "max" },
+        { "name": "restart" },
+        { "name": "repeatCount" },
+        { "name": "repeatDur" },
+        { "name": "fill" },
+        { "name": "calcMode" },
+        { "name": "keyTimes" },
+        { "name": "keySplines" },
+        { "name": "additive" },
+        { "name": "accumulate" },
+        { "name": "href" },
+        { "name": "xlink:href" }
+      ]
+    },
+    {
+      "name": "animateTransform",
+      "description": "Animate a transform.",
+      "attributes": [
+        { "name": "attributeName" },
+        { "name": "type" },
+        { "name": "from" },
+        { "name": "to" },
+        { "name": "by" },
+        { "name": "values" },
+        { "name": "dur" },
+        { "name": "begin" },
+        { "name": "end" },
+        { "name": "repeatCount" },
+        { "name": "repeatDur" },
+        { "name": "fill" },
+        { "name": "calcMode" },
+        { "name": "keyTimes" },
+        { "name": "keySplines" },
+        { "name": "additive" },
+        { "name": "accumulate" },
+        { "name": "href" },
+        { "name": "xlink:href" }
+      ]
+    },
+    {
+      "name": "animateMotion",
+      "description": "Animate along a motion path.",
+      "attributes": [
+        { "name": "path" },
+        { "name": "keyPoints" },
+        { "name": "rotate" },
+        { "name": "origin" },
+        { "name": "dur" },
+        { "name": "begin" },
+        { "name": "end" },
+        { "name": "repeatCount" },
+        { "name": "repeatDur" },
+        { "name": "fill" },
+        { "name": "calcMode" },
+        { "name": "keyTimes" },
+        { "name": "keySplines" },
+        { "name": "additive" },
+        { "name": "accumulate" },
+        { "name": "href" },
+        { "name": "xlink:href" }
+      ]
+    },
+    {
+      "name": "mpath",
+      "description": "Motion path reference.",
+      "attributes": [{ "name": "href" }, { "name": "xlink:href" }]
+    },
+    {
+      "name": "set",
+      "description": "Set an attribute for a duration.",
+      "attributes": [
+        { "name": "attributeName" },
+        { "name": "to" },
+        { "name": "dur" },
+        { "name": "begin" },
+        { "name": "end" },
+        { "name": "fill" },
+        { "name": "href" },
+        { "name": "xlink:href" }
+      ]
+    }
+  ],
+  "globalAttributes": [
+    { "name": "id" },
+    { "name": "class" },
+    { "name": "style" },
+    { "name": "tabindex" },
+    { "name": "lang" },
+    { "name": "xml:lang" },
+    { "name": "xml:space" },
+    { "name": "xml:base" },
+    { "name": "role" },
+    { "name": "aria-label" },
+    { "name": "aria-labelledby" },
+    { "name": "aria-describedby" },
+    { "name": "aria-hidden" },
+
+    { "name": "transform" },
+    { "name": "transform-origin" },
+
+    { "name": "fill" },
+    { "name": "fill-opacity" },
+    { "name": "fill-rule" },
+    { "name": "stroke" },
+    { "name": "stroke-opacity" },
+    { "name": "stroke-width" },
+    { "name": "stroke-linecap" },
+    { "name": "stroke-linejoin" },
+    { "name": "stroke-miterlimit" },
+    { "name": "stroke-dasharray" },
+    { "name": "stroke-dashoffset" },
+    { "name": "opacity" },
+    { "name": "color" },
+    { "name": "color-interpolation" },
+    { "name": "color-interpolation-filters" },
+    { "name": "color-rendering" },
+    { "name": "paint-order" },
+    { "name": "vector-effect" },
+    { "name": "shape-rendering" },
+    { "name": "image-rendering" },
+    { "name": "text-rendering" },
+    { "name": "will-change" },
+
+    { "name": "clip-path" },
+    { "name": "clip-rule" },
+    { "name": "mask" },
+    { "name": "filter" },
+    { "name": "mix-blend-mode" },
+    { "name": "isolation" },
+
+    { "name": "display" },
+    { "name": "visibility" },
+    { "name": "overflow" },
+    { "name": "cursor" },
+    { "name": "pointer-events" },
+
+    { "name": "font-family" },
+    { "name": "font-size" },
+    { "name": "font-size-adjust" },
+    { "name": "font-stretch" },
+    { "name": "font-style" },
+    { "name": "font-variant" },
+    { "name": "font-weight" },
+    { "name": "letter-spacing" },
+    { "name": "word-spacing" },
+    { "name": "text-anchor" },
+    { "name": "text-decoration" },
+    { "name": "dominant-baseline" },
+    { "name": "alignment-baseline" },
+    { "name": "baseline-shift" },
+    { "name": "direction" },
+    { "name": "writing-mode" },
+    { "name": "unicode-bidi" },
+
+    { "name": "stop-color" },
+    { "name": "stop-opacity" },
+    { "name": "flood-color" },
+    { "name": "flood-opacity" },
+    { "name": "lighting-color" },
+
+    { "name": "marker-start" },
+    { "name": "marker-mid" },
+    { "name": "marker-end" },
+
+    { "name": "href" },
+    { "name": "xlink:href" },
+    { "name": "xlink:title" },
+    { "name": "xlink:show" },
+    { "name": "xlink:actuate" },
+    { "name": "xlink:type" },
+
+    { "name": "onclick" },
+    { "name": "onmousedown" },
+    { "name": "onmouseup" },
+    { "name": "onmousemove" },
+    { "name": "onmouseover" },
+    { "name": "onmouseout" },
+    { "name": "onfocusin" },
+    { "name": "onfocusout" },
+    { "name": "onload" }
+  ]
+}
