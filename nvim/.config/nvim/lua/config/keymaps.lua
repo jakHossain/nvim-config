@@ -53,18 +53,11 @@ end, { desc = "Resume last search" })
 ------------------------------------------------------------------
 keymap("n", "<leader>e", ":NvimTreeToggle<CR>", { desc = "Toggle File Explorer" })
 keymap("n", "<leader>nf", ":NvimTreeFindFile<CR>", { desc = "Find current file in Tree" })
-
-------------------------------------------------------------------
--- Svelte LSP
-------------------------------------------------------------------
-keymap("n", "<leader>rr", function()
-	local clients = vim.lsp.get_clients({ name = "svelte" })
-	for _, client in ipairs(clients) do
-		vim.lsp.stop_client(client.id, true)
-	end
-	vim.cmd("edit")
-	print("Svelte LSP restarted")
-end, { desc = "Restart Svelte LSP" })
+-- Navigate split panes using Tab + h/j/k/l
+vim.keymap.set("n", "<Tab>h", "<C-w>h", { desc = "Move to left split" })
+vim.keymap.set("n", "<Tab>j", "<C-w>j", { desc = "Move to bottom split" })
+vim.keymap.set("n", "<Tab>k", "<C-w>k", { desc = "Move to top split" })
+vim.keymap.set("n", "<Tab>l", "<C-w>l", { desc = "Move to right split" })
 
 ------------------------------------------------------------------
 -- LSP Buffer Keymaps & Completion
