@@ -1,6 +1,6 @@
 vim.g.mapleader = " "
 vim.g.maplocalleader = ","
-vim.opt.timeoutlen = 200
+vim.opt.timeoutlen = 350
 
 vim.g.loaded_netrw = 1
 vim.g.loaded_netrwPlugin = 1
