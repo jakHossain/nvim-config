@@ -46,7 +46,6 @@ function M.setup_servers()
 
 	require("mason-lspconfig").setup({
 		ensure_installed = {
-			"ts_ls",
 			"eslint",
 			"svelte",
 			"html",
@@ -82,6 +81,16 @@ function M.setup_servers()
 	vim.lsp.config("svelte", {
 		capabilities = capabilities,
 		settings = {
+			typescript = {
+				suggest = {
+					autoImports = true,
+				},
+			},
+			javascript = {
+				suggest = {
+					autoImports = true,
+				},
+			},
 			svelte = {
 				plugin = { html = { completions = { enable = true } }, css = { completions = { enable = true } } },
 			},

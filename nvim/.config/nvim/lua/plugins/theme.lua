@@ -24,12 +24,17 @@
 --   end,
 -- }
 return {
-    "tiagovla/tokyodark.nvim",
-    opts = {
-      transparent_background = true
-    },
-    config = function(_, opts)
-        require("tokyodark").setup(opts) -- calling setup is optional
-        vim.cmd [[colorscheme tokyodark]]
-    end,
+	"tiagovla/tokyodark.nvim",
+	opts = {
+		transparent_background = true,
+		custom_highlights = function()
+			return {
+				Comment = { fg = "#7982a9", italic = true },
+			}
+		end,
+	},
+	config = function(_, opts)
+		require("tokyodark").setup(opts) -- calling setup is optional
+		vim.cmd([[colorscheme tokyodark]])
+	end,
 }
