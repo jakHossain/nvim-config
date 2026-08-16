@@ -81,22 +81,20 @@ function M.setup_servers()
 	vim.lsp.config("svelte", {
 		capabilities = capabilities,
 		settings = {
-			typescript = {
-				suggest = {
-					autoImports = true,
-				},
-			},
-			javascript = {
-				suggest = {
-					autoImports = true,
-				},
-			},
 			svelte = {
 				plugin = { html = { completions = { enable = true } }, css = { completions = { enable = true } } },
 			},
 			html = { customData = { svg_custom_data } },
 		},
 		on_attach = function(client)
+			vim.api.nvim_create_autocmd("BufWritePost", {
+				pattern = { "*.js", "*.ts", "*.jsx", "*.tsx" },
+				callback = function(ctx)
+					-- Here use ctx.match instead of ctx.file
+					client:notify("$/onDidChangeTsOrJsFile", { uri = ctx.match })
+				end,
+			})
+
 			client.server_capabilities.documentFormattingProvider = false
 		end,
 	})
