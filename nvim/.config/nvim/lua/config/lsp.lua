@@ -90,8 +90,14 @@ function M.setup_servers()
 			vim.api.nvim_create_autocmd("BufWritePost", {
 				pattern = { "*.js", "*.ts", "*.jsx", "*.tsx" },
 				callback = function(ctx)
-					-- Here use ctx.match instead of ctx.file
-					client:notify("$/onDidChangeTsOrJsFile", { uri = ctx.match })
+					local root_dir = client.config.root_dir or client.root_dir
+
+					-- Only notify if the saved file belongs to this LSP project
+					if root_dir and vim.startswith(ctx.match, root_dir) then
+						client:notify("$/onDidChangeTsOrJsFile", {
+							uri = vim.uri_from_fname(ctx.match),
+						})
+					end
 				end,
 			})
 
