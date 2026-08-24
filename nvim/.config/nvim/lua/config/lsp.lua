@@ -54,11 +54,14 @@ function M.setup_servers()
 			"pyright",
 			"lua_ls",
 			"jsonls",
+			"dockerls",
+			"docker_compose_language_service",
+			"yamlls",
 		},
 	})
 
 	require("mason-tool-installer").setup({
-		ensure_installed = { "prettier", "stylua" },
+		ensure_installed = { "prettier", "stylua", "hadolint" },
 		auto_update = true,
 		run_on_start = true,
 	})
@@ -162,6 +165,34 @@ function M.setup_servers()
 	})
 	vim.lsp.enable("jsonls")
 
+	-- Dockerfile
+	vim.lsp.config("dockerls", {
+		capabilities = capabilities,
+	})
+	vim.lsp.enable("dockerls")
+
+	-- Docker Compose
+	vim.lsp.config("docker_compose_language_service", {
+		capabilities = capabilities,
+	})
+	vim.lsp.enable("docker_compose_language_service")
+
+	-- YAML (using schemastore for compose, k8s, github workflows, etc.)
+	vim.lsp.config("yamlls", {
+		capabilities = capabilities,
+		settings = {
+			yaml = {
+				schemaStore = {
+					enable = false,
+					url = "",
+				},
+				schemas = require("schemastore").yaml.schemas(),
+				validate = true,
+			},
+		},
+	})
+	vim.lsp.enable("yamlls")
+
 	-- 3. Conform Setup (Format on Save)
 	require("conform").setup({
 		formatters_by_ft = {
@@ -173,6 +204,8 @@ function M.setup_servers()
 			html = { "prettier" },
 			css = { "prettier" },
 			json = { "prettier" },
+			yaml = { "prettier" },
+			dockerfile = {},
 			lua = { "stylua" },
 		},
 		format_on_save = function(bufnr)
@@ -186,6 +219,7 @@ function M.setup_servers()
 				html = true,
 				css = true,
 				json = true,
+				yaml = true,
 				lua = true,
 			}
 			return {
