@@ -1,0 +1,58 @@
+" IdeaVim config generated from nvim/.config/nvim keymaps.
+" Keeps Vim/editor behavior and maps Neovim plugin/LSP actions to IntelliJ actions where practical.
+
+let mapleader = " "
+let maplocalleader = ","
+
+set number
+set relativenumber
+set tabstop=2
+set shiftwidth=2
+set expandtab
+set timeoutlen=350
+
+" General editing
+inoremap jk <Esc>
+nnoremap <leader>w :w<CR>
+nnoremap <leader>q :q<CR>
+nnoremap <leader>wq :wq<CR>
+nnoremap <Esc> :nohlsearch<CR><Esc>
+
+" Telescope-style navigation/search mapped to IntelliJ features
+nmap <leader>ff <Action>(GotoFile)
+nmap <leader>FF <Action>(GotoFile)
+nmap <leader>fg <Action>(FindInPath)
+nmap <leader>FG <Action>(FindInPath)
+nmap <leader>fb <Action>(RecentFiles)
+nmap <leader>/ <Action>(Find)
+nmap <leader>fr <Action>(SearchEverywhere)
+
+" Project/file tree equivalents
+nmap <leader>e <Action>(ActivateProjectToolWindow)
+nmap <leader>nf <Action>(SelectInProjectView)
+
+" Editor splits and tabs
+nmap <leader>sv <Action>(SplitVertically)
+nmap <leader>sh <Action>(SplitHorizontally)
+nmap <leader>sx <Action>(Unsplit)
+nmap <A-h> <Action>(PreviousTab)
+nmap <A-l> <Action>(NextTab)
+nnoremap <Tab>h <C-w>h
+nnoremap <Tab>j <C-w>j
+nnoremap <Tab>k <C-w>k
+nnoremap <Tab>l <C-w>l
+
+" Code intelligence / LSP equivalents
+nmap gd <Action>(GotoDeclaration)
+nmap gy <Action>(GotoTypeDeclaration)
+nmap K <Action>(QuickJavaDoc)
+nmap gr <Action>(FindUsages)
+nmap gl <Action>(ShowErrorDescription)
+nmap <leader>rn <Action>(RenameElement)
+nmap <leader>ca <Action>(ShowIntentionActions)
+nmap <leader>ws <Action>(GotoSymbol)
+nmap <leader>dw <Action>(ActivateProblemsViewToolWindow)
+
+" Insert-mode code help
+imap <C-Space> <Action>(CodeCompletion)
+imap <C-h> <Action>(ParameterInfo)
