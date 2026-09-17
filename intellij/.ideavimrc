@@ -13,6 +13,8 @@ set timeoutlen=350
 
 " General editing
 inoremap jk <Esc>
+xnoremap jk <Esc>
+snoremap jk <Esc>
 nnoremap <leader>w :w<CR>
 nnoremap <leader>q :q<CR>
 nnoremap <leader>wq :wq<CR>
