@@ -62,7 +62,7 @@ function M.setup_servers()
 
 	require("mason-tool-installer").setup({
 		ensure_installed = { "prettier", "stylua", "hadolint" },
-		auto_update = true,
+		auto_update = false,
 		run_on_start = true,
 	})
 
